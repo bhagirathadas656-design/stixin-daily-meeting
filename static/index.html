@@ -40,7 +40,16 @@
 
     <!-- Right Header Actions -->
     <div class="header-actions">
-      <!-- Invite / Team Links Button -->
+      <!-- Email Invite Button -->
+      <button class="btn btn-secondary" id="btn-open-email-invite" style="font-size: 0.8rem; padding: 0.45rem 0.85rem; background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border-color: rgba(139,92,246,0.4);" title="Send meeting invite email to your team">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Invite Team
+      </button>
+
+      <!-- Unique Links Button -->
       <button class="btn btn-secondary" id="btn-open-invite" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;" title="Generate unique links for each team member">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -48,7 +57,7 @@
           <line x1="20" y1="8" x2="20" y2="14"/>
           <line x1="23" y1="11" x2="17" y2="11"/>
         </svg>
-        Unique Links
+        Links
       </button>
 
       <!-- Past Meetings Archive Button -->
@@ -204,6 +213,15 @@
               <polyline points="10 9 9 9 8 9"/>
             </svg>
             Generate MoM
+          </button>
+
+          <!-- Send Email Invite (in-room) -->
+          <button class="btn btn-secondary" id="btn-send-invite-inroom" title="Send meeting join link to your team via email" style="height: 48px; border-radius: 14px; padding: 0 1rem; font-size: 0.82rem; background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border-color: rgba(139,92,246,0.4);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Invite
           </button>
 
           <!-- Hinglish Voice Simulator Bar with Quick Sample Buttons -->
@@ -375,6 +393,67 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" id="btn-close-archive-footer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Invite Modal -->
+  <div class="modal-overlay view-hidden" id="email-invite-modal">
+    <div class="modal-content glass" style="max-width: 560px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="font-size: 1.15rem; font-weight: 700;">📧 Send Meeting Invite</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Add your team's email addresses once. One click sends the invite every time.</p>
+        </div>
+        <button class="btn btn-secondary btn-icon" id="btn-close-email-invite" style="border-radius: 50%; width: 32px; height: 32px;">✕</button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Info Banner -->
+        <div style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 10px; padding: 0.85rem; margin-bottom: 1.25rem; font-size: 0.82rem; color: #c7d2fe;">
+          <strong>How it works:</strong> Save your team's emails below. When you're ready to start a meeting, click <strong>"Send Invite Email"</strong> — your email client opens with a pre-filled invite containing the live meeting link, ready to send in one click.
+        </div>
+
+        <!-- Room ID (auto-filled) -->
+        <div class="form-group">
+          <label for="invite-room-id">Meeting Room ID</label>
+          <input type="text" id="invite-room-id" class="input-field" placeholder="e.g. daily-standup" value="daily-standup">
+          <small style="color: var(--text-dim); font-size: 0.72rem;">This is the room your team will join.</small>
+        </div>
+
+        <!-- Add Team Email -->
+        <div class="form-group">
+          <label>Team Member Emails</label>
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 0.65rem;">
+            <input type="text" id="invite-member-name" class="input-field" placeholder="Name (e.g. Rohan)" style="flex: 1;">
+            <input type="email" id="invite-member-email" class="input-field" placeholder="email@example.com" style="flex: 2;">
+            <button class="btn btn-primary" id="btn-add-email-member" style="white-space: nowrap;">+ Add</button>
+          </div>
+
+          <!-- Email List -->
+          <div id="email-members-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 200px; overflow-y: auto;">
+            <!-- Members added dynamically -->
+            <div style="text-align: center; color: var(--text-dim); font-size: 0.8rem; padding: 1rem;" id="email-members-empty">No team members added yet. Add someone above!</div>
+          </div>
+        </div>
+
+        <!-- Meeting Platform URL -->
+        <div class="form-group">
+          <label for="invite-platform-url">Your Platform URL</label>
+          <input type="text" id="invite-platform-url" class="input-field" value="https://stixin-daily-meeting.onrender.com" placeholder="https://stixin-daily-meeting.onrender.com">
+          <small style="color: var(--text-dim); font-size: 0.72rem;">Your hosted platform URL. Change if using a custom domain.</small>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="gap: 0.75rem;">
+        <button class="btn btn-secondary" id="btn-close-email-invite-footer">Cancel</button>
+        <button class="btn btn-primary" id="btn-send-invite-email" style="gap: 0.5rem; background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          Send Invite Email
+        </button>
       </div>
     </div>
   </div>
