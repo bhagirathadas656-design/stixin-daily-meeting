@@ -67,7 +67,21 @@ const elements = {
   btnOpenArchive: document.getElementById('btn-open-archive'),
   btnCloseArchive: document.getElementById('btn-close-archive'),
   btnCloseArchiveFooter: document.getElementById('btn-close-archive-footer'),
-  archiveMeetingsList: document.getElementById('archive-meetings-list')
+  archiveMeetingsList: document.getElementById('archive-meetings-list'),
+  // Email Invite Elements
+  emailInviteModal: document.getElementById('email-invite-modal'),
+  btnOpenEmailInvite: document.getElementById('btn-open-email-invite'),
+  btnCloseEmailInvite: document.getElementById('btn-close-email-invite'),
+  btnCloseEmailInviteFooter: document.getElementById('btn-close-email-invite-footer'),
+  btnAddEmailMember: document.getElementById('btn-add-email-member'),
+  btnSendInviteEmail: document.getElementById('btn-send-invite-email'),
+  btnSendInviteInroom: document.getElementById('btn-send-invite-inroom'),
+  inviteMemberName: document.getElementById('invite-member-name'),
+  inviteMemberEmail: document.getElementById('invite-member-email'),
+  emailMembersList: document.getElementById('email-members-list'),
+  emailMembersEmpty: document.getElementById('email-members-empty'),
+  inviteRoomId: document.getElementById('invite-room-id'),
+  invitePlatformUrl: document.getElementById('invite-platform-url')
 };
 
 // Team Members State for Permanent Unique Links
