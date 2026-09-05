@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  stixin-meeting:
+    build: .
+    container_name: stixin_daily_meeting
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      # Paste your 100% Free Neon or Supabase Cloud PostgreSQL URL below:
+      - DATABASE_URL=${DATABASE_URL:-}
+      # Optional: Free AI API Keys
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+    volumes:
+      - ./data:/app/data
